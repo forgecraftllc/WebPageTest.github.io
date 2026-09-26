@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gas Mileage Tracker | Mass 4 Life</title>
+<meta name="description" content="Track fuel mileage, fill-ups and fuel cost for three vehicles.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header"><div class="container nav" id="nav">
+  <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span><span>MASS 4 LIFE</span></a>
+  <nav class="nav-links" aria-label="Primary"><a href="calendar.html">Calendar</a><a href="outdoor-report.html">Outdoor Report</a><a href="gas-mileage.html" aria-current="page">Gas Mileage</a><a href="index.html#regions">Explore</a><a class="nav-cta" href="index.html">Home</a></nav>
+  <button class="mobile-menu" aria-label="Toggle menu" onclick="document.getElementById('nav').classList.toggle('open')">☰</button>
+</div></header>
+
+<main id="main">
+<section class="page-hero fuel-hero"><div class="container"><div class="eyebrow" style="color:#f1c06d">Garage tool</div><h1>Track every fill-up.</h1><p>Keep separate mileage and fuel-cost records for three vehicles. Your data stays in this browser unless you export it.</p></div></section>
+
+<section class="section-sm"><div class="container">
+  <div class="fuel-toolbar">
+    <div><div class="eyebrow">Your garage</div><h2 class="fuel-toolbar-title">Choose a vehicle</h2></div>
+    <button class="btn btn-outline" id="manageVehiclesBtn" type="button">Rename vehicles</button>
+  </div>
+  <div class="vehicle-tabs" id="vehicleTabs" aria-label="Vehicle selector"></div>
+
+  <div class="fuel-layout">
+    <section class="fuel-entry-card">
+      <div class="eyebrow">New fill-up</div>
+      <h2 id="entryTitle">Add fuel record</h2>
+      <p class="muted fuel-note">For accurate MPG, enter the odometer at each fill-up and use gallons from a full tank refill.</p>
+      <form id="fuelForm" novalidate>
+        <div class="fuel-form-grid">
+          <label class="field-label">Odometer
+            <div class="input-with-unit"><input class="input" id="odometer" type="number" inputmode="decimal" step="0.1" min="0" required placeholder="125,430.2"><span>mi</span></div>
+          </label>
+          <label class="field-label">Gallons added
+            <div class="input-with-unit"><input class="input" id="gallons" type="number" inputmode="decimal" step="0.001" min="0.001" required placeholder="12.456"><span>gal</span></div>
+          </label>
+          <label class="field-label">Price per gallon
+            <div class="input-with-unit money"><span>$</span><input class="input" id="pricePerGallon" type="number" inputmode="decimal" step="0.001" min="0" required placeholder="3.299"></div>
+          </label>
+          <label class="field-label">Total cost
+            <div class="input-with-unit money"><span>$</span><input class="input" id="totalCost" type="number" inputmode="decimal" step="0.01" min="0" required placeholder="41.09"></div>
+          </label>
+        </div>
+        <div id="formMessage" class="form-message" aria-live="polite"></div>
+        <div class="fuel-form-actions">
+          <button class="btn btn-dark" id="saveEntryBtn" type="submit">Save fill-up</button>
+          <button class="btn btn-outline" id="cancelEditBtn" type="button" hidden>Cancel edit</button>
+        </div>
+      </form>
+    </section>
+
+    <aside class="fuel-summary-card">
+      <div class="eyebrow">Vehicle summary</div>
+      <div class="summary-heading"><h2 id="summaryVehicleName">Vehicle 1</h2><span class="summary-entry-count" id="summaryEntryCount">0 fill-ups</span></div>
+      <div class="fuel-stats">
+        <div class="fuel-stat"><span>Last MPG</span><strong id="lastMpg">—</strong></div>
+        <div class="fuel-stat"><span>Average MPG</span><strong id="avgMpg">—</strong></div>
+        <div class="fuel-stat"><span>Miles tracked</span><strong id="milesTracked">0</strong></div>
+        <div class="fuel-stat"><span>Total fuel cost</span><strong id="totalSpent">$0.00</strong></div>
+      </div>
+      <div class="fuel-data-note"><strong>How MPG is calculated:</strong> miles driven since the previous odometer entry ÷ gallons added at the current fill-up. The first entry establishes the starting odometer.</div>
+    </aside>
+  </div>
+
+  <section class="fuel-history-card">
+    <div class="fuel-history-head">
+      <div><div class="eyebrow">Fill-up history</div><h2 id="historyTitle">Vehicle 1</h2></div>
+      <button class="btn btn-outline" id="exportCsvBtn" type="button">Export CSV</button>
+    </div>
+    <div class="fuel-table-wrap">
+      <table class="fuel-table">
+        <thead><tr><th>Date</th><th>Odometer</th><th>Gallons</th><th>$/gal</th><th>Total</th><th>Miles</th><th>MPG</th><th></th></tr></thead>
+        <tbody id="fuelHistory"></tbody>
+      </table>
+      <div class="fuel-empty" id="fuelEmpty">No fill-ups yet. Add the first odometer reading to start this vehicle's log.</div>
+    </div>
+  </section>
+
+  <p class="source-note fuel-storage-note">Fuel records are saved with browser local storage on this device. Clearing browser/site data can erase them, so use Export CSV periodically if you want a backup.</p>
+</div></section>
+
+<div class="vehicle-dialog-backdrop" id="vehicleDialog" hidden>
+  <section class="vehicle-dialog" role="dialog" aria-modal="true" aria-labelledby="vehicleDialogTitle">
+    <div class="vehicle-dialog-head"><div><div class="eyebrow">Your garage</div><h2 id="vehicleDialogTitle">Rename vehicles</h2></div><button class="dialog-close" id="closeVehicleDialog" type="button" aria-label="Close">×</button></div>
+    <div class="vehicle-name-fields" id="vehicleNameFields"></div>
+    <div class="fuel-form-actions"><button class="btn btn-dark" id="saveVehicleNames" type="button">Save names</button><button class="btn btn-outline" id="cancelVehicleNames" type="button">Cancel</button></div>
+  </section>
+</div>
+</main>
+
+<footer class="footer"><div class="container"><strong>MASS 4 LIFE</strong><p style="color:rgba(255,255,255,.6)">Gas mileage records are stored locally in your browser.</p></div></footer>
+<script src="site.js"></script><script src="gas-mileage.js"></script>
+</body></html>

@@ -1,7 +1,11 @@
 const places=[
  {name:'Boston',lat:42.3601,lon:-71.0589},
  {name:'Marlborough',lat:42.3459,lon:-71.5523},
+ {name:'Salem',lat:42.5195,lon:-70.8967},
  {name:'Gloucester',lat:42.6159,lon:-70.6620},
+ {name:'Newburyport',lat:42.8126,lon:-70.8773},
+ {name:'Scituate',lat:42.1959,lon:-70.7259},
+ {name:'Plymouth',lat:41.9584,lon:-70.6673},
  {name:'Hyannis',lat:41.6525,lon:-70.2881},
  {name:'Worcester',lat:42.2626,lon:-71.8023},
  {name:'Springfield',lat:42.1015,lon:-72.5898},
@@ -85,6 +89,16 @@ function renderForecastMap(placeIndex=selectedPlaceIndex){
     <text class="ma-map-label" x="68" y="73">MASSACHUSETTS</text>
     <text class="ma-water-label" x="760" y="85">ATLANTIC</text>
     <text class="ma-water-label" x="775" y="108">OCEAN</text>
+    <g class="ma-region-labels">
+      <text x="105" y="205">BERKSHIRES</text>
+      <text x="265" y="215">PIONEER VALLEY</text>
+      <text x="430" y="210">CENTRAL</text>
+      <text x="575" y="205">METROWEST</text>
+      <text x="670" y="180">BOSTON</text>
+      <text x="710" y="110">NORTH SHORE</text>
+      <text x="690" y="285">SOUTH SHORE</text>
+      <text x="790" y="350">CAPE COD</text>
+    </g>
     <ellipse class="ma-selected-area" cx="${center.x.toFixed(1)}" cy="${center.y.toFixed(1)}" rx="${rx.toFixed(1)}" ry="${ry.toFixed(1)}"/>
     ${markers}
     <g class="ma-map-key" transform="translate(66 410)">
